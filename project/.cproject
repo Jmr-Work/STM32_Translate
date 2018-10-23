@@ -19,7 +19,7 @@
 							<option id="com.atollic.truestudio.toolchain_options.mcu.974313343" name="Microcontroller" superClass="com.atollic.truestudio.toolchain_options.mcu" value="STM32L053C8" valueType="string"/>
 							<option id="com.atollic.truestudio.toolchain_options.vendor.1592143646" name="Vendor name" superClass="com.atollic.truestudio.toolchain_options.vendor" value="STMicroelectronics" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.atollic.truestudio.exe.debug.toolchain.platform.58684868" isAbstract="false" name="Debug platform" osList="all" superClass="com.atollic.truestudio.exe.debug.toolchain.platform"/>
-							<builder buildPath="${workspace_loc:/STM32_Translate}/Debug" customBuilderProperties="toolChainpathString=C:\\Program Files (x86)\\Atollic\\TrueSTUDIO for STM32 9.0.1\\ARMTools\\bin|toolChainpathType=1|" id="com.atollic.truestudio.mbs.builder1.676778316" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" superClass="com.atollic.truestudio.mbs.builder1"/>
+							<builder buildPath="${workspace_loc:/STM32_Translate}/Debug" customBuilderProperties="toolChainpathType=1|toolChainpathString=C:\\Program Files (x86)\\Atollic\\TrueSTUDIO for STM32 9.0.1\\ARMTools\\bin|" id="com.atollic.truestudio.mbs.builder1.676778316" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" superClass="com.atollic.truestudio.mbs.builder1"/>
 							<tool id="com.atollic.truestudio.exe.debug.toolchain.as.634690587" name="Assembler" superClass="com.atollic.truestudio.exe.debug.toolchain.as">
 								<option id="com.atollic.truestudio.common_options.target.endianess.1177028331" name="Endianess" superClass="com.atollic.truestudio.common_options.target.endianess"/>
 								<option id="com.atollic.truestudio.common_options.target.mcpu.76713353" name="Microcontroller" superClass="com.atollic.truestudio.common_options.target.mcpu" value="STM32L053C8" valueType="enumerated"/>
@@ -30,11 +30,11 @@
 									<listOptionValue builtIn="false" value="STM32L053xx"/>
 									<listOptionValue builtIn="false" value="USE_STDPERIPH_DRIVER"/>
 								</option>
-								<option id="com.atollic.truestudio.as.general.incpath.1135754310" name="Include path" superClass="com.atollic.truestudio.as.general.incpath" valueType="includePath">
-									<listOptionValue builtIn="false" value="../src"/>
-									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
-									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32L0xx/Include"/>
-									<listOptionValue builtIn="false" value="../Drivers/STM32L0xx_HAL_Driver/Inc"/>
+								<option id="com.atollic.truestudio.as.general.incpath.1135754310" name="Include path" superClass="com.atollic.truestudio.as.general.incpath" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="../../source"/>
+									<listOptionValue builtIn="false" value="../../lbr/CMSIS/Include"/>
+									<listOptionValue builtIn="false" value="../../lbr/CMSIS/Device/ST/STM32L0xx/Include"/>
+									<listOptionValue builtIn="false" value="../../lbr/STM32L0xx_HAL_Driver/Inc"/>
 								</option>
 								<inputType id="com.atollic.truestudio.as.input.1982963655" name="Input" superClass="com.atollic.truestudio.as.input"/>
 							</tool>
@@ -47,7 +47,7 @@
 									<listOptionValue builtIn="false" value="../../source"/>
 									<listOptionValue builtIn="false" value="../../lbr/CMSIS/Include"/>
 									<listOptionValue builtIn="false" value="../../lbr/CMSIS/Device/ST/STM32L0xx/Include"/>
-									<listOptionValue builtIn="false" value="../../STM32L0xx_HAL_Driver/Inc"/>
+									<listOptionValue builtIn="false" value="../../lbr/STM32L0xx_HAL_Driver/Inc"/>
 								</option>
 								<option id="com.atollic.truestudio.common_options.target.endianess.856760331" name="Endianess" superClass="com.atollic.truestudio.common_options.target.endianess"/>
 								<option id="com.atollic.truestudio.common_options.target.mcpu.682203757" name="Microcontroller" superClass="com.atollic.truestudio.common_options.target.mcpu" value="STM32L053C8" valueType="enumerated"/>
@@ -232,4 +232,5 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+	<storageModule moduleId="refreshScope"/>
 </cproject>

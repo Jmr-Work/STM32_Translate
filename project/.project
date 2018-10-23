@@ -80,14 +80,29 @@
 			<locationURI>PARENT-1-PROJECT_LOC/source/startup_stm32l053xx.s</locationURI>
 		</link>
 		<link>
+			<name>source/system.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/source/system.c</locationURI>
+		</link>
+		<link>
+			<name>source/system.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/source/system.h</locationURI>
+		</link>
+		<link>
 			<name>source/system_stm32l0xx.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/source/system_stm32l0xx.c</locationURI>
 		</link>
 		<link>
-			<name>source/tiny_printf.c</name>
+			<name>source/uart.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/source/tiny_printf.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/source/uart.c</locationURI>
+		</link>
+		<link>
+			<name>source/uart.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/source/uart.h</locationURI>
 		</link>
 		<link>
 			<name>lbr/CMSIS/CMSIS END USER LICENCE AGREEMENT.pdf</name>

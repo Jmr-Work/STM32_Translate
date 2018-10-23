@@ -14,7 +14,7 @@
  * 			none current
  *
  * 	@section	Legal Disclaimer
- * 			Â© Year Company Name, All rights reserved. All contents of this source file and/or any other related source  
+ * 			© 2018 Company Name, All rights reserved. All contents of this source file and/or any other related source
  *			files are the explicit property of Company Name. Do not distribute. Do not copy.
  */
 /************************************************************************************************************************************/

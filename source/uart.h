@@ -1,5 +1,5 @@
 /************************************************************************************************************************************/
-/** @file		main.h
+/** @file		uart.h
  * 	@brief		x
  * 	@details	x
  *
@@ -14,25 +14,30 @@
  * 			none current
  *
  * 	@section	Legal Disclaimer
- * 			© 2018 Company Name, All rights reserved. All contents of this source file and/or any other related source
+ * 			Â© Year Company Name, All rights reserved. All contents of this source file and/or any other related source
  *			files are the explicit property of Company Name. Do not distribute. Do not copy.
  */
 /************************************************************************************************************************************/
-#ifndef MAIN_H_
-#define MAIN_H_
+#ifndef UART_H_
+#define UART_H_
 
 //Lib
-#include <stddef.h>
 
 //Project
-#include "globals.h"
-#include "system.h"
-#include "uart.h"
-#include "stm32l0xx.h"
 
 //Definitions
+#define 	TXBUFFERSIZE 	(100)
+#define 	RXBUFFERSIZE 	(100)
 
 //Typedefs
 
-#endif /* MAIN_H_ */
+//Globals
+extern void uart_init(void);
+
+//Locals
+
+//Private
+static void _Error_Handler(char *file, int line);
+
+#endif /* UART_H_ */
 

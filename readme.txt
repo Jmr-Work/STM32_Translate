@@ -8,11 +8,14 @@
 	Capture problem statement & specification gen
 	Repo Establish
 	Pick Proc for ref (STM32L0x1 fam)
-		14-pin TSSOP min selected, STM32L011D3
+		@sel 	14-pin TSSOP min selected, STM32L011D3
 	Project Procedure
 	Project Generation
-		TrueSTUDIO:STM32L0538_DISCO selected for clarity & time efficiency
-	
+		@src 	TrueSTUDIO:STM32L0538_DISCO selected for clarity & time efficiency
+	Solution Arch Generation
+		@ref 	stn32l011d3-usart2-cubemx.zip
+		@ref	stm32cube_fw_l0_v1.10.0.zip
+		
 @section 	Project Procedure
 	This work illustrates my skill & capacity for zipcar firmware development
 	

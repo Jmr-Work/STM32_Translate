@@ -1,5 +1,5 @@
 /************************************************************************************************************************************/
-/** @file		main.h
+/** @file		system.h
  * 	@brief		x
  * 	@details	x
  *
@@ -18,21 +18,26 @@
  *			files are the explicit property of Company Name. Do not distribute. Do not copy.
  */
 /************************************************************************************************************************************/
-#ifndef MAIN_H_
-#define MAIN_H_
+#ifndef SYSTEM_H_
+#define SYSTEM_H_
 
 //Lib
-#include <stddef.h>
 
 //Project
-#include "globals.h"
-#include "system.h"
 #include "uart.h"
-#include "stm32l0xx.h"
 
 //Definitions
 
 //Typedefs
 
-#endif /* MAIN_H_ */
+//Globals
+extern void sys_init(void);
+
+//Locals
+void system_init (void);
+void system_clockConfig(void);
+void gpio_init(void);
+void _Error_Handler(char *file, int line);
+
+#endif /* SYSTEM_H_ */
 
