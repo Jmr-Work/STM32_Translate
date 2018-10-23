@@ -16,8 +16,7 @@
  *		SYS      - System operations and control
  *
  * 	@section	Opens
- * 			clean includes arch (messy at present)
- * 			use ref to establish form
+ * 			make operational
  * 			naming standardized
  *
  *	@note	This is reference code not intended for compilation or operation
@@ -28,14 +27,19 @@
 /************************************************************************************************************************************/
 #include "main.h"
 
+#define NUM_MESSAGES (3)													/* @note 	an array of rx-tx structs may be cleaner,	*/
+																			/*			this soln is simple and clear				*/
+//Messages
+char *messages[NUM_MESSAGES] = {"Hello", "Goodbye", "Ok", "TBC"};
+
+//Responses
+char *responses[NUM_MESSAGES] = {"Bonjour", "Au revoir", "D'accord", "À confirmer"};
 
 /************************************************************************************************************************************/
 /**	@fcn		int main(void)
  *  @brief		program main routine
  *  @details	x
  *
- *  @section	Opens
- *  	power optimization can be achieved when sleeping for rx
  */
 /************************************************************************************************************************************/
 int main(void) {
@@ -78,6 +82,12 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *UartHandle) {
  */
 /************************************************************************************************************************************/
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle) {
+
+	//Grab message
+
+	//Lookup response (use of strcmp() to find match)
+
+	//Return response (perform transmit operation)
 
 	/* Set transmission flag: transfer complete*/
 	UartReady = SET;
