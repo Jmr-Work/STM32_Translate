@@ -5,7 +5,10 @@
 @date 		10/23/18
 
 @section 	Procedure
-	x
+	Capture problem statement & specification gen
+	Repo Establish
+	Pick Proc for ref (STM32L0x1 fam)
+		14-pin TSSOP min selected, STM32L011D3
 
 	
 @section 	Problem Specification
