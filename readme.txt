@@ -44,3 +44,10 @@
 	
 	You can make any assumption you need about items that are not documented in these specs (e.g. other hardware components, etc), as long as you clearly identify them and document them. If you have any questions or need any clarification, please don't hesitate to ask! The code doesn’t need to compile or run, it’s just for us to get a sense for how you think.
 
+@section 	Opens
+	x
+
+
+@section 	References
+	[1] Source Email - Code Assignment.pdf (10/22/18)
+
