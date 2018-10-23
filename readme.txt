@@ -9,8 +9,19 @@
 	Repo Establish
 	Pick Proc for ref (STM32L0x1 fam)
 		14-pin TSSOP min selected, STM32L011D3
-
+	Project Procedure
+	Project Generation
+		TrueSTUDIO:STM32L0538_DISCO selected for clarity & time efficiency
 	
+@section 	Project Procedure
+	This work illustrates my skill & capacity for zipcar firmware development
+	
+	- targeting solution architecture with description
+	
+	- not targeting runtime solution 
+		*stm is additionally a high time investment in this
+
+
 @section 	Problem Specification
 
 	@goals
