@@ -30,6 +30,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>globals.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/globals.h</locationURI>
+		</link>
+		<link>
 			<name>lbr</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -38,6 +43,11 @@
 			<name>main.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/main.c</locationURI>
+		</link>
+		<link>
+			<name>main.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/main.h</locationURI>
 		</link>
 		<link>
 			<name>source</name>
