@@ -17,13 +17,9 @@
  *		All assumptions valid
  *
  * 	@section	Opens
- * 		Init
- * 		ISR
- * 		Translate
- * 		Tx
- * 		...
  * 		Reduce to 80 chars wide
  * 		...
+ * 		Implement Example Dev Stubs
  * 		Deployment
  * 		Compilation
  *
@@ -36,12 +32,37 @@
 //Library
 #include <stdlib.h>
 
-//Local Functions
-void sys_init(void);
+//STM32
+#include "stm32l0xx_hal_uart.h"
 
-//<Dev Stubs>
-void HAL_Init(void) { }
-void sleep(void) { }
+//Project
+#include "lut.h"
+
+//Definitions
+#define RX_BUF_SIZE		(100)
+#define TX_BUF_SIZE		(100)
+
+//Local Functions
+void sys_init(void);														/* System boot initialisation							*/
+void ISR_UART_RX(void);														/* Uart Rx ISR handle									*/
+void tx_msg(void);															/* Uart Tx routine										*/
+
+//Local Variables
+UART_HandleTypeDef uart_cfg;												/* UART handle for HAL api								*/
+char tx_buffer[TX_BUF_SIZE];												/* transmit buffer										*/
+int  tx_buffer_end;															/* string length in buffer								*/
+
+
+//<Example Dev Stubs>
+void HAL_Init(void) { }														/* Stm32 api											*/
+void HAL_Resume(void) { }													/* Stm32 example api									*/
+void sleep(void) { }														/* Proc to sleep										*/
+void __HAL_RCC_GPIOA_CLK_ENABLE(void) { }									/* Stm32 recommended boot config for gpio				*/
+void HAL_UART_RxIsr(void *rx_isr) { }										/* Stm32 routine to set the uart receive isr			*/
+void sys_check(void) { }													/* Check the system for valid configuration state		*/
+void int_enable(void) { }													/* Enable interrupts									*/
+
+
 
 
 /************************************************************************************************************************************/
@@ -68,15 +89,19 @@ int main(void) {
 	sys_init();																/* initialize sys & uart for use						*/
 
 	//Run
-	sleep();																/* wait & respond to uart msg							*/
+	for(;;) {
+		sleep();															/* wait & respond to uart msg							*/
+		tx_msg();															/* perform tx response									*/
+	}
 
 	return EXIT_FAILURE;													/* should never reach, reset & restart					*/
 }
 
+
 /************************************************************************************************************************************/
 /**	@fcn		void sys_init(void)
  *  @brief		initialize mcu & peripherals
- *  @details	x
+ *  @details	a brief review and examination of reference indicated the following content in multiple locations
  *
  *  @pre		any
  *  @post		system ready for operation
@@ -86,33 +111,98 @@ int main(void) {
 /************************************************************************************************************************************/
 void sys_init(void) {
 
-	//(Pre) System Check
-
-	//HAL
-	HAL_Init();
+	//Init Locals
+	uart_cfg.Instance = USART2;												/* UART configuration									*/
+	uart_cfg.Init.BaudRate = 115200;
+	uart_cfg.Init.WordLength = UART_WORDLENGTH_8B;
+	uart_cfg.Init.StopBits = UART_STOPBITS_1;
+	uart_cfg.Init.Parity = UART_PARITY_NONE;
+	uart_cfg.Init.Mode = UART_MODE_TX_RX;
+	uart_cfg.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+	uart_cfg.Init.OverSampling = UART_OVERSAMPLING_16;
+	uart_cfg.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+	uart_cfg.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
 
 	//Init Core
+	HAL_Init();
 
 	//Init GPIO
-		//Set all to inputs
-
-	//Stabilize
+	__HAL_RCC_GPIOA_CLK_ENABLE();											/* GPIO Ports Clock Enable 								*/
 
 	//Init Clocks
+	//<Clocks - HAL_RCC_OscConfig(), HAL_RCC_ClockConfig(), HAL_RCCEx_PeriphCLKConfig()>
+	//<Systick - HAL_SYSTICK_Config(), HAL_SYSTICK_CLKSourceConfig(), HAL_NVIC_SetPriority()>
 
-	//Init Periphs
-		//Init UART
-		//Assign Receive ISR
+	//Init UART
+	HAL_UART_Init(&uart_cfg);												/* @note 	DRM not recommended, STM HAL used here		*/
+	HAL_UART_RxIsr(&ISR_UART_RX);											/* Assign Receive ISR									*/
 
-	//(Post) System Check
+	//Post
+	sys_check();
+	int_enable();
 
 	return;
 }
 
 
-//@todo
-void isr_resp(void) {
+/************************************************************************************************************************************/
+/**	@fcn		void ISR_UART_RX(void)
+ *  @brief		receive interrupt handler for uart
+ *  @details	x
+ *
+ *  @assum		no rx overflow
+ */
+/************************************************************************************************************************************/
+void ISR_UART_RX(void) {
 
+	//Locals
+	char rx_buffer[RX_BUF_SIZE];
+	int  rx_count;
+
+	//Init
+	rx_count = 0;
+
+	//Grab Rx Message
+	while(uart_cfg.RxXferCount> 0) {
+		rx_buffer[rx_count++] = USART2->RDR;								/* grab receive data register							*/
+		uart_timeout_wait();												/* wait specified duration for next rx byte				*/
+	}
+	rx_buffer[rx_count] = '\0';												/* place EOS for response parse							*/
+
+	//Lookup Response
+	char *resp = translate_msg(rx_buffer);
+
+	//Load Response
+	tx_buffer_end = sizeof(resp);											/* capture message size									*/
+	memcpy(tx_buffer, resp, tx_buffer_end);									/* load value											*/
+
+	//Send Response
+	HAL_Resume();															/* resume main thread									*/
+
+	return;
+}
+
+
+/************************************************************************************************************************************/
+/**	@fcn		void ISR_UART_RX(void)
+ *  @brief		receive interrupt handler for uart
+ *  @details	x
+ *
+ *  @assum		no rx overflow, called by completion of valid rx message
+ *
+ *	@pre		tx_buffer loaded
+ *
+ *  @section 	Opens
+ *  	Code
+ */
+/************************************************************************************************************************************/
+void tx_msg(void) {
+
+	//Load
+//	load tx_buffer
+//	send over uart
+
+	return;
 }
 
 
