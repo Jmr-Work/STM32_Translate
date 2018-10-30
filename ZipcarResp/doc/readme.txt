@@ -16,3 +16,5 @@
 	Power consumption is important
 	Able to run alongside other modules
 	Any assumptions valid
+
+	The code doesn’t need to compile or run, it’s just for us to get a sense for how you think.
