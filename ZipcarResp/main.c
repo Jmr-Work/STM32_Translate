@@ -1,13 +1,12 @@
 /************************************************************************************************************************************/
 /** @file		main.c
  * 	@brief		Zipcar coding task response
- * 	@details	x
+ * 	@env		Eclipse CDT (v4.80), MinGW (v6.3.0)
+ * 	@repo		https://github.com/Jmr-Work/STM32_Translate
  *
  * 	@author		Justin Reina, Firmware Engineer
  * 	@created	10/30/18
  * 	@last rev	10/30/18
- *
- *	@env		Eclipse CDT (v4.80), MinGW (v6.3.0)
  *
  * 	@section 	Keys
  * 		From scratch
@@ -31,26 +30,43 @@
 
 //Library
 #include <stdlib.h>
+#include <string.h>
 
 //STM32
 #include "stm32l0xx_hal_uart.h"
 
-//Project
-#include "lut.h"
 
 //Definitions
-#define RX_BUF_SIZE		(100)
-#define TX_BUF_SIZE		(100)
+#define 	RX_BUF_SIZE		(100)
+#define 	TX_BUF_SIZE	 	(100)
+#define 	MAX_STR_SIZE 	(100)											/* Max string length supported @temp					*/
+#define 	LUT_SIZE     	(100)											/* Max count of LUT values @temp						*/
+
+//Typedefs
+typedef struct lut_value {													/* lookup table value for rx->tx response				*/
+	char rx[MAX_STR_SIZE];
+	char tx[MAX_STR_SIZE];
+} LUT_Value;
+
 
 //Local Functions
 void sys_init(void);														/* System boot initialisation							*/
-void ISR_UART_RX(void);														/* Uart Rx ISR handle									*/
+void isr_uart_rx(void);														/* Uart Rx ISR handle									*/
 void tx_msg(void);															/* Uart Tx routine										*/
+char * translate_msg(char *message);										/* Lookup specified tx response to rx message			*/
 
 //Local Variables
 UART_HandleTypeDef uart_cfg;												/* UART handle for HAL api								*/
 char tx_buffer[TX_BUF_SIZE];												/* transmit buffer										*/
 int  tx_buffer_end;															/* string length in buffer								*/
+
+
+//Lookup Table
+LUT_Value lut[LUT_SIZE] = {													/* LUT values											*/
+		{"Hello","Bonjour"},
+		{"Goodbye","Au revoir"},
+		{"Ok", "D'accord"}
+};
 
 
 //<Example Dev Stubs>
@@ -63,8 +79,6 @@ void sys_check(void) { }													/* Check the system for valid configuration
 void int_enable(void) { }													/* Enable interrupts									*/
 
 
-
-
 /************************************************************************************************************************************/
 /**	@fcn		int main(void)
  *  @brief		x
@@ -72,8 +86,8 @@ void int_enable(void) { }													/* Enable interrupts									*/
  *
  *  @section 	Tasks
  *  	System Init		(sys_init)
- *		UART Rx			()
- *		UART Tx 		()
+ *		UART Rx			(isr_uart_rx)
+ *		UART Tx 		(tx_msg)
  *
  *	@section 	Considerations
  *		Low power
@@ -135,7 +149,7 @@ void sys_init(void) {
 
 	//Init UART
 	HAL_UART_Init(&uart_cfg);												/* @note 	DRM not recommended, STM HAL used here		*/
-	HAL_UART_RxIsr(&ISR_UART_RX);											/* Assign Receive ISR									*/
+	HAL_UART_RxIsr(&isr_uart_rx);											/* Assign Receive ISR									*/
 
 	//Post
 	sys_check();
@@ -146,14 +160,14 @@ void sys_init(void) {
 
 
 /************************************************************************************************************************************/
-/**	@fcn		void ISR_UART_RX(void)
+/**	@fcn		void isr_uart_rx(void)
  *  @brief		receive interrupt handler for uart
  *  @details	x
  *
  *  @assum		no rx overflow
  */
 /************************************************************************************************************************************/
-void ISR_UART_RX(void) {
+void isr_uart_rx(void) {
 
 	//Locals
 	char rx_buffer[RX_BUF_SIZE];
@@ -203,6 +217,30 @@ void tx_msg(void) {
 //	send over uart
 
 	return;
+}
+
+
+/************************************************************************************************************************************/
+/**	@fcn		char * translate_msg(char *message)
+ *  @brief		translate inbound msg to specified response
+ *  @details	string values
+ *
+ *  @param		[in] (char *) message - received message to use for lookup
+ *  @return		(char *) pointer to response message, 0 for failure
+ *
+ *  @assum		no rx overflow
+ *
+ *  @section 	Opens
+ *  	Code
+ */
+/************************************************************************************************************************************/
+char * translate_msg(char *message) {
+
+	//Find LUT value
+//	for(each LUT value)
+//		if found return LUT response value
+
+	return (char*)0;														/* return 0 to indicate failure							*/
 }
 
 
