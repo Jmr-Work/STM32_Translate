@@ -1,4 +1,4 @@
-/************************************************************************************************************************************/
+/******************************************************************************/
 /** @file		main.c
  * 	@brief		Zipcar coding task response
  * 	@env		Eclipse CDT (v4.80), MinGW (v6.3.0)
@@ -16,17 +16,14 @@
  *		All assumptions valid
  *
  * 	@section	Opens
- * 		Reduce to 80 chars wide
- * 		...
  * 		Implement Example Dev Stubs
  * 		Deployment
  * 		Compilation
  *
  * 	@section	Legal Disclaimer
- * 		Justin Reina 2018, All rights reserved. All contents of this source file and/or any other related source
- *		files are the explicit property of Justin Reina. Do not distribute. Do not copy.
+ * 		Justin Reina 2018, All rights reserved.
  */
-/************************************************************************************************************************************/
+/******************************************************************************/
 
 //Library
 #include <stdlib.h>
@@ -39,30 +36,30 @@
 //Definitions
 #define 	RX_BUF_SIZE		(100)
 #define 	TX_BUF_SIZE	 	(100)
-#define 	MAX_STR_SIZE 	(100)											/* Max string length supported @temp					*/
-#define 	LUT_SIZE     	(100)											/* Max count of LUT values @temp						*/
+#define 	MAX_STR_SIZE 	(100)				/* Max string length supported*/
+#define 	LUT_SIZE     	(100)				/* Max count of LUT values	  */
 
 //Typedefs
-typedef struct lut_value {													/* lookup table value for rx->tx response				*/
+typedef struct lut_value {						/* lookup rx->tx responses	  */
 	char rx[MAX_STR_SIZE];
 	char tx[MAX_STR_SIZE];
 } LUT_Value;
 
 
 //Local Functions
-void sys_init(void);														/* System boot initialisation							*/
-void isr_uart_rx(void);														/* Uart Rx ISR handle									*/
-void tx_msg(void);															/* Uart Tx routine										*/
-char * translate_msg(char *message);										/* Lookup specified tx response to rx message			*/
+void sys_init(void);							/* System boot initialisation */
+void isr_uart_rx(void);							/* Uart Rx ISR handle 		  */
+void tx_msg(void);								/* Uart Tx routine 			  */
+char * translate_msg(char *message);			/* Lookup tx resp to rx msg   */
 
 //Local Variables
-UART_HandleTypeDef uart_cfg;												/* UART handle for HAL api								*/
-char tx_buffer[TX_BUF_SIZE];												/* transmit buffer										*/
-int  tx_buffer_end;															/* string length in buffer								*/
+UART_HandleTypeDef uart_cfg;					/* UART handle for HAL api 	  */
+char tx_buffer[TX_BUF_SIZE];					/* Transmit buffer 			  */
+int  tx_buffer_end;								/* String length in buffer 	  */
 
 
 //Lookup Table
-LUT_Value lut[LUT_SIZE] = {													/* LUT values											*/
+LUT_Value lut[LUT_SIZE] = {						/* LUT values				  */
 		{"Hello","Bonjour"},
 		{"Goodbye","Au revoir"},
 		{"Ok", "D'accord"}
@@ -70,16 +67,16 @@ LUT_Value lut[LUT_SIZE] = {													/* LUT values											*/
 
 
 //<Example Dev Stubs>
-void HAL_Init(void) { }														/* Stm32 api											*/
-void HAL_Resume(void) { }													/* Stm32 example api									*/
-void sleep(void) { }														/* Proc to sleep										*/
-void __HAL_RCC_GPIOA_CLK_ENABLE(void) { }									/* Stm32 recommended boot config for gpio				*/
-void HAL_UART_RxIsr(void *rx_isr) { }										/* Stm32 routine to set the uart receive isr			*/
-void sys_check(void) { }													/* Check the system for valid configuration state		*/
-void int_enable(void) { }													/* Enable interrupts									*/
+void HAL_Init(void) { }							/* Stm32 api				  */
+void HAL_Resume(void) { }						/* Stm32 example api		  */
+void sleep(void) { }							/* Proc to sleep		  	  */
+void __HAL_RCC_GPIOA_CLK_ENABLE(void) { }		/* Recmd boot config for gpio */
+void HAL_UART_RxIsr(void *rx_isr) { }			/* Set the uart receive isr	  */
+void sys_check(void) { }						/* Check cfg valid			  */
+void int_enable(void) { }						/* Enable interrupts 		  */
 
 
-/************************************************************************************************************************************/
+/******************************************************************************/
 /**	@fcn		int main(void)
  *  @brief		x
  *  @details	x
@@ -96,37 +93,40 @@ void int_enable(void) { }													/* Enable interrupts									*/
  *	@section 	Assumptions (@assum?)
  *		x
  */
-/************************************************************************************************************************************/
+/******************************************************************************/
 int main(void) {
 
 	//Init
-	sys_init();																/* initialize sys & uart for use						*/
+	sys_init();									/* Init sys & uart for use 	  */
 
 	//Run
 	for(;;) {
-		sleep();															/* wait & respond to uart msg							*/
-		tx_msg();															/* perform tx response									*/
+		sleep();								/* Wait & respond to uart msg */
+		tx_msg();								/* Perform tx response 		  */
 	}
 
-	return EXIT_FAILURE;													/* should never reach, reset & restart					*/
+	return EXIT_FAILURE;						/* Error, reset & restart 	  */
 }
 
 
-/************************************************************************************************************************************/
+/******************************************************************************/
 /**	@fcn		void sys_init(void)
  *  @brief		initialize mcu & peripherals
- *  @details	a brief review and examination of reference indicated the following content in multiple locations
+ *  @details	a brief review and examination of reference indicated the
+ *  			following content in multiple locations
  *
  *  @pre		any
  *  @post		system ready for operation
  *
  *  @return 	on success
+ *
+ *  @note 		DRM not recommended, STM HAL used here
  */
-/************************************************************************************************************************************/
+/******************************************************************************/
 void sys_init(void) {
 
 	//Init Locals
-	uart_cfg.Instance = USART2;												/* UART configuration									*/
+	uart_cfg.Instance = USART2;					/* UART configuration		  */
 	uart_cfg.Init.BaudRate = 115200;
 	uart_cfg.Init.WordLength = UART_WORDLENGTH_8B;
 	uart_cfg.Init.StopBits = UART_STOPBITS_1;
@@ -141,15 +141,19 @@ void sys_init(void) {
 	HAL_Init();
 
 	//Init GPIO
-	__HAL_RCC_GPIOA_CLK_ENABLE();											/* GPIO Ports Clock Enable 								*/
+	__HAL_RCC_GPIOA_CLK_ENABLE();				/* GPIO Ports Clock Enable	  */
 
 	//Init Clocks
-	//<Clocks - HAL_RCC_OscConfig(), HAL_RCC_ClockConfig(), HAL_RCCEx_PeriphCLKConfig()>
-	//<Systick - HAL_SYSTICK_Config(), HAL_SYSTICK_CLKSourceConfig(), HAL_NVIC_SetPriority()>
+	//<Clocks -  HAL_RCC_OscConfig(),
+	//			 HAL_RCC_ClockConfig(),
+	//			 HAL_RCCEx_PeriphCLKConfig()>
+	//<Systick - HAL_SYSTICK_Config(),
+	//			 HAL_SYSTICK_CLKSourceConfig(),
+	//			 HAL_NVIC_SetPriority()>
 
 	//Init UART
-	HAL_UART_Init(&uart_cfg);												/* @note 	DRM not recommended, STM HAL used here		*/
-	HAL_UART_RxIsr(&isr_uart_rx);											/* Assign Receive ISR									*/
+	HAL_UART_Init(&uart_cfg);					/* Init						  */
+	HAL_UART_RxIsr(&isr_uart_rx);				/* Assign Receive ISR 		  */
 
 	//Post
 	sys_check();
@@ -159,14 +163,14 @@ void sys_init(void) {
 }
 
 
-/************************************************************************************************************************************/
+/******************************************************************************/
 /**	@fcn		void isr_uart_rx(void)
  *  @brief		receive interrupt handler for uart
  *  @details	x
  *
  *  @assum		no rx overflow
  */
-/************************************************************************************************************************************/
+/******************************************************************************/
 void isr_uart_rx(void) {
 
 	//Locals
@@ -178,26 +182,26 @@ void isr_uart_rx(void) {
 
 	//Grab Rx Message
 	while(uart_cfg.RxXferCount> 0) {
-		rx_buffer[rx_count++] = USART2->RDR;								/* grab receive data register							*/
-		uart_timeout_wait();												/* wait specified duration for next rx byte				*/
+		rx_buffer[rx_count++] = USART2->RDR;	/* Grab receive data register */
+		uart_timeout_wait();					/* Wait for next rx byte 	  */
 	}
-	rx_buffer[rx_count] = '\0';												/* place EOS for response parse							*/
+	rx_buffer[rx_count] = '\0';					/* Place EOS for parse 		  */
 
 	//Lookup Response
 	char *resp = translate_msg(rx_buffer);
 
 	//Load Response
-	tx_buffer_end = sizeof(resp);											/* capture message size									*/
-	memcpy(tx_buffer, resp, tx_buffer_end);									/* load value											*/
+	tx_buffer_end = sizeof(resp);				/* Capture message size */
+	memcpy(tx_buffer, resp, tx_buffer_end);		/* Load value */
 
 	//Send Response
-	HAL_Resume();															/* resume main thread									*/
+	HAL_Resume();								/* Resume main thread */
 
 	return;
 }
 
 
-/************************************************************************************************************************************/
+/******************************************************************************/
 /**	@fcn		void ISR_UART_RX(void)
  *  @brief		receive interrupt handler for uart
  *  @details	x
@@ -209,7 +213,7 @@ void isr_uart_rx(void) {
  *  @section 	Opens
  *  	Code
  */
-/************************************************************************************************************************************/
+/******************************************************************************/
 void tx_msg(void) {
 
 	//Load
@@ -220,7 +224,7 @@ void tx_msg(void) {
 }
 
 
-/************************************************************************************************************************************/
+/******************************************************************************/
 /**	@fcn		char * translate_msg(char *message)
  *  @brief		translate inbound msg to specified response
  *  @details	string values
@@ -233,15 +237,15 @@ void tx_msg(void) {
  *  @section 	Opens
  *  	Code
  */
-/************************************************************************************************************************************/
+/******************************************************************************/
 char * translate_msg(char *message) {
 
 	//Find LUT value
 //	for(each LUT value)
 //		if found return LUT response value
 
-	return (char*)0;														/* return 0 to indicate failure							*/
+	return (char*)0;							/* Return 0 on failure 		  */
 }
 
 
-/************************************************************ End of File ***********************************************************/
+/******************************** End of File *********************************/
